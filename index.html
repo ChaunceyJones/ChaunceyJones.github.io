@@ -145,6 +145,18 @@
 
   /* Colored top accent bar on project cards, varied per index for visual rhythm */
   .accent-bar { height: 3px; border-radius: 9999px 9999px 0 0; margin: -1.5rem -1.5rem 1.25rem; }
+
+  /* Tailwind's built-in `text-base` font-size utility collides with this config's custom
+     color named `base` (#0b0f19, the page background), so `md:text-base` was silently
+     setting body copy to near-black on dark navy at >=768px. This replacement gives the
+     same 16px size with no color side effect. */
+  @media (min-width: 768px) {
+    .md\:text-\[16px\] { font-size: 1rem; line-height: 1.5rem; }
+  }
+
+  /* Brighter than text-muted for the small project-card body copy, which runs at 14px and
+     needs more contrast than the larger paragraphs do. */
+  .text-soft\/75 { color: rgba(241, 243, 248, 0.75); }
   .accent-1 { background: linear-gradient(90deg, #6366F1, #22D3EE); }
   .accent-2 { background: linear-gradient(90deg, #A78BFA, #6366F1); }
   .accent-3 { background: linear-gradient(90deg, #22D3EE, #A78BFA); }
@@ -291,7 +303,7 @@
         The short version of a longer story.
       </p>
     </div>
-    <div class="reveal space-y-5 text-muted leading-relaxed text-[15px] md:text-base">
+    <div class="reveal space-y-5 text-muted leading-relaxed text-[15px] md:text-[16px]">
       <p>
         I spent my early twenties in service bays, not spreadsheets — running OBD-II scans, tracing electrical faults with a multimeter, and translating "check engine" into a plain-English explanation a customer could act on. That job taught me something a classroom can't: how to isolate one true cause inside a system full of noisy, conflicting signals.
       </p>
@@ -403,7 +415,7 @@
           <span class="text-xs font-mono text-muted">Trading &amp; Market Analytics</span>
         </div>
         <h3 class="font-display text-2xl md:text-3xl font-semibold text-soft mb-3">Permian&ndash;Waha Basis Dashboard</h3>
-        <p class="text-muted leading-relaxed text-[15px] md:text-base max-w-3xl mb-7">
+        <p class="text-muted leading-relaxed text-[15px] md:text-[16px] max-w-3xl mb-7">
           Waha (Permian Basin) natural gas regularly trades at a discount to Henry Hub, the national benchmark &mdash; but no clean API exists for it anywhere. I built a pipeline that regex-parses the price directly out of narrative EIA reports, flags statistically unusual weeks with a rolling anomaly score, and tests storage and rig-count data as leading indicators &mdash; reporting the null result honestly alongside the real one.
         </p>
 
@@ -456,7 +468,7 @@
           <span class="text-xs font-mono text-muted">Pricing Analytics</span>
         </div>
         <h3 class="font-display text-2xl md:text-3xl font-semibold text-soft mb-3">Solar PPA Pricing &amp; Discounting Analysis</h3>
-        <p class="text-muted leading-relaxed text-[15px] md:text-base max-w-3xl mb-7">
+        <p class="text-muted leading-relaxed text-[15px] md:text-[16px] max-w-3xl mb-7">
           A benchmark comparison isn't just a chart — it's only as good as understanding what the benchmark actually measures. Built a pipeline over LBNL's 1,775-project solar PPA database, caught a real methodology mistake before it shipped (a +$194/MWh "finding" that was really just an uncorrected vintage mismatch), and traced the deeper pattern to a mismatch between asking-price and realized-price data &mdash; confirmed directly against the benchmark provider's own published methodology.
         </p>
 
@@ -722,7 +734,7 @@
           <h3 class="font-display text-lg font-semibold text-soft leading-snug">${p.title}</h3>
           <svg class="shrink-0 mt-1 text-muted" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
         </div>
-        <p class="text-sm text-muted leading-relaxed flex-1">${p.description}</p>
+        <p class="text-[14px] text-soft/75 leading-relaxed flex-1">${p.description}</p>
         <div class="mt-5 flex flex-wrap gap-2">${p.tech.map(techBadge).join('')}</div>
       `;
       grid.appendChild(card);
