@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Solar PPA Pricing & Discounting Analysis — Chauncey Jones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  :root { box-sizing: border-box; --bg:#0b161e; --chrome:#f4f1ea; }
+  *, *::before, *::after { box-sizing: inherit; }
+  html, body { margin:0; padding:0; background:var(--bg); }
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+  }
+
+  /* Each slide is authored at 1920x1080 and scaled to fit the viewport width. */
+  #stage { width:100%; max-width:1920px; margin:0 auto; position:relative; }
+  #frame { position:relative; width:100%; padding-bottom:56.25%; overflow:hidden; }
+  .slide {
+    position:absolute; inset:0;
+    width:1920px; height:1080px;
+    transform-origin: top left;
+    display:none;
+  }
+  .slide.active { display:block; }
+  .slide > section { width:1920px; height:1080px; margin:0; position:relative; box-sizing:border-box; }
+  .slide aside { display:none; }
+
+  /* Controls */
+  #bar {
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    max-width:1920px; margin:0 auto; padding:14px 20px;
+    color:var(--chrome); font-size:14px;
+  }
+  #bar a, #bar button {
+    font:inherit; color:var(--chrome); background:transparent;
+    border:1px solid rgba(244,241,234,.28); border-radius:8px;
+    padding:8px 14px; cursor:pointer; text-decoration:none;
+  }
+  #bar button:hover, #bar a:hover { border-color:rgba(244,241,234,.7); }
+  #bar button[disabled] { opacity:.35; cursor:default; }
+  #counter { font-variant-numeric:tabular-nums; opacity:.8; }
+  .grp { display:flex; align-items:center; gap:10px; }
+  #hint { text-align:center; color:rgba(244,241,234,.45); font-size:12px; padding:0 20px 20px; }
+  @media (max-width:640px) { #hint { display:none; } #bar { font-size:13px; } }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="frame">
+    <div class="slide" data-id="cover">
+<section id="cover" style="background:#0b161e; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; justify-content:center; gap:32px">
+<p style="font-size:28px; color:#9fb2bd; letter-spacing:2px">PRICING ANALYST PORTFOLIO PROJECT</p>
+<h1 style="font-family:'Source Serif 4', Georgia, serif; font-size:132px; font-weight:400; line-height:1.1; color:#f4f1ea">Solar PPA <span style="color:#e8b74a">Pricing</span> &amp; Discounting</h1>
+<p style="font-size:36px; color:#c9d3d8; max-width:1450px">What a public market benchmark can and can't tell you about whether a deal was priced well</p>
+<p style="position:absolute; left:128px; bottom:64px; font-size:24px; color:#6f8492">2007&ndash;2024 &middot; LBNL Utility-Scale Solar 2025 Edition &middot; LevelTen &amp; Trio PPA Price Index</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="situation">
+<section id="situation" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px; display:flex; flex-direction:column; justify-content:center; gap:40px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">THE SITUATION</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:76px; font-weight:400; line-height:1.15; color:#f4f1ea; max-width:1550px">A pricing team needs to know if a deal was priced well &mdash; and what to trust when checking</h2>
+<p style="font-size:32px; color:#c9d3d8; max-width:1400px; line-height:1.5">There's no public dataset of real negotiated deals with win/loss outcomes, so this project uses a strong analog: LBNL's utility-scale solar PPA database, benchmarked against a third-party market-price index &mdash; the same kind of check a pricing desk runs before signing off on a deal.</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="question">
+<section id="question" data-transition="fade" style="background:#0b161e; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:16px">
+<h3 style="font-size:32px; font-weight:600; color:#e8b74a; letter-spacing:1px">THE QUESTION</h3>
+<h1 style="font-family:'Source Serif 4', Georgia, serif; font-size:88px; font-weight:400; line-height:1.25; color:#f4f1ea; max-width:1600px">Are recent solar PPA deals priced well relative to the market &mdash; and can a public price index actually answer that?</h1>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="data-approach">
+<section id="data-approach" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:68px; font-weight:400; color:#f4f1ea">Data &amp; approach</h2>
+<div style="display:flex; gap:32px">
+<div style="flex:1; display:flex; flex-direction:column; gap:16px; background:#17282f; padding:40px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:30px; font-weight:600; color:#e8b74a">LBNL project data</h3>
+<p style="font-size:26px; color:#c9d3d8; line-height:1.4">1,775 real utility-scale solar projects, 2007&ndash;2024. Genuinely structured &mdash; a clean Excel workbook, not scraped prose.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:16px; background:#17282f; padding:40px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:30px; font-weight:600; color:#7cb88f">LevelTen &amp; Trio index</h3>
+<p style="font-size:26px; color:#c9d3d8; line-height:1.4">Third-party regional PPA price benchmark, 7 organized markets. Confirmed its actual methodology before trusting it &mdash; see the diagnosis ahead.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:16px; background:#17282f; padding:40px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:30px; font-weight:600; color:#c9d3d8">Method</h3>
+<p style="font-size:26px; color:#c9d3d8; line-height:1.4">Filter to disclosed-price PV projects, join to the regional benchmark, compare &mdash; then check whether that comparison is actually fair.</p>
+</div>
+</div>
+<p style="font-size:28px; color:#9fb2bd; max-width:1500px">1,759 PV projects after excluding CSP. Only 425 (24%) disclose a PPA price at all &mdash; a real selection-bias constraint kept in view throughout.</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="finding1">
+<section id="finding1" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px; display:flex; flex-direction:column; justify-content:center; gap:20px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">FINDING 1 &mdash; AN 85% PRICE DECLINE, VERIFIED</h3>
+<h1 style="font-family:'Source Serif 4', Georgia, serif; font-size:200px; font-weight:400; color:#7cb88f; line-height:1">~85%</h1>
+<p style="font-size:34px; color:#c9d3d8">drop in median disclosed PPA price, 2010&ndash;11 vintage ($~200/MWh) to 2022&ndash;24 vintage (~$25&ndash;32/MWh)</p>
+<p style="font-size:28px; color:#9fb2bd; max-width:1300px; line-height:1.4">Tracks median LCOE closely over the same period &mdash; independently reproducing LBNL's own published industry trend, a useful sanity check before trusting anything more specific.</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="finding2">
+<section id="finding2" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:36px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">FINDING 2 &mdash; A MISTAKE CAUGHT BEFORE IT SHIPPED</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:60px; font-weight:400; color:#f4f1ea; max-width:1600px; line-height:1.2">The first version of this analysis said 2011 projects were overpriced by <span style="color:#d9704a">+$194/MWh</span>. That number is wrong.</h2>
+<p style="font-size:28px; color:#c9d3d8; max-width:1500px; line-height:1.5">It came from comparing 2011-vintage project prices directly against the 2024 market benchmark &mdash; two prices from cost eras 14 years and an 85% industry decline apart. Not a pricing signal. A vintage mismatch.</p>
+<div style="display:flex; gap:24px; margin-top:8px">
+<div style="flex:1; background:#2e1c16; border:1px solid #d9704a; border-radius:16px; padding:32px">
+<h3 style="font-size:26px; font-weight:600; color:#d9704a">Wrong approach</h3>
+<p style="font-size:24px; color:#e8c6bd; margin-top:8px">Compare ALL vintages (2007&ndash;2024) against the single 2024 benchmark</p>
+</div>
+<div style="flex:1; background:#17282f; border:1px solid #24404c; border-radius:16px; padding:32px">
+<h3 style="font-size:26px; font-weight:600; color:#7cb88f">Fixed approach</h3>
+<p style="font-size:24px; color:#c9d3d8; margin-top:8px">Restrict the benchmark comparison to matching-vintage (2022&ndash;24) projects only</p>
+</div>
+</div>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="finding3">
+<section id="finding3" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:36px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">FINDING 3 &mdash; EVEN FAIRLY COMPARED, EVERY SEGMENT IS BELOW BENCHMARK</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:56px; font-weight:400; color:#f4f1ea; max-width:1650px">107 vintage-matched (2022&ndash;24) projects, compared against the 2024 index</h2>
+<table style="width:100%; border-collapse:collapse; font-size:28px">
+<tr style="border-bottom:1px solid #24404c">
+<th style="text-align:left; padding:14px 12px; color:#9fb2bd; font-weight:600">Segment</th>
+<th style="text-align:left; padding:14px 12px; color:#9fb2bd; font-weight:600">n</th>
+<th style="text-align:left; padding:14px 12px; color:#9fb2bd; font-weight:600">vs. benchmark</th>
+</tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:14px 12px">PJM (region)</td><td style="padding:14px 12px">15</td><td style="padding:14px 12px; color:#e8b74a">&minus;$28.59/MWh</td></tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:14px 12px">Corporate (offtaker)</td><td style="padding:14px 12px">8</td><td style="padding:14px 12px; color:#e8b74a">&minus;$33.35/MWh</td></tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:14px 12px">Public Utilities (offtaker)</td><td style="padding:14px 12px">19</td><td style="padding:14px 12px; color:#e8b74a">&minus;$22.72/MWh</td></tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:14px 12px">CAISO (region)</td><td style="padding:14px 12px">21</td><td style="padding:14px 12px; color:#e8b74a">&minus;$18.19/MWh</td></tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:14px 12px">Monopoly IOU (offtaker)</td><td style="padding:14px 12px">5</td><td style="padding:14px 12px; color:#e8b74a">&minus;$16.46/MWh</td></tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:14px 12px">MISO (region)</td><td style="padding:14px 12px">13</td><td style="padding:14px 12px; color:#e8b74a">&minus;$13.80/MWh</td></tr>
+<tr><td style="padding:14px 12px">Investor-owned Utility (offtaker)</td><td style="padding:14px 12px">11</td><td style="padding:14px 12px; color:#e8b74a">&minus;$11.00/MWh</td></tr>
+</table>
+<p style="font-size:24px; color:#9fb2bd">Every reliably-sized segment (n &ge; 5, benchmark available) &mdash; not one scattered around zero. That consistency is the actual signal.</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="diagnosis">
+<section id="diagnosis" data-transition="fade" style="background:#1f3d2e; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h3 style="font-size:32px; font-weight:600; color:#bcdcc7; letter-spacing:1px">THE DIAGNOSIS &mdash; WHY</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:56px; font-weight:400; color:#f4f1ea; max-width:1650px; line-height:1.3">An asking price and a closing price are not the same measurement.</h2>
+<div style="background:#16291e; border-left:6px solid #e8b74a; padding:36px 40px; border-radius:8px">
+<p style="font-size:30px; color:#f4e6c4; line-height:1.5; font-style:italic">&ldquo;The offers underlying our Index are from projects that are currently under development and posted by developers to the LevelTen Marketplace&hellip; giving the industry a transparent and unprecedented look at actual PPA price offers &mdash; <b>not estimates of what PPA prices could or should be.</b>&rdquo;</p>
+<p style="font-size:22px; color:#bcdcc7; margin-top:16px">&mdash; LevelTen Energy, PPA Price Index methodology</p>
+</div>
+<p style="font-size:26px; color:#d5e6da; max-width:1600px; line-height:1.5">The index is a <b>P25 offer price</b> for projects still seeking a buyer. LBNL's data is a <b>realized, signed price</b> for completed projects. A closing price coming in below an asking-price index is close to the expected outcome &mdash; not evidence of negotiation skill.</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="recommendation">
+<section id="recommendation" data-transition="fade" style="background:#0b161e; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:44px">
+<h3 style="font-size:32px; font-weight:600; color:#e8b74a; letter-spacing:1px">RECOMMENDATION</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:68px; font-weight:400; color:#f4f1ea; max-width:1600px">Check what a benchmark measures before trusting a comparison built on it.</h2>
+<div style="display:flex; gap:32px">
+<div style="flex:1; display:flex; flex-direction:column; gap:12px; background:#17282f; padding:36px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:28px; font-weight:600; color:#7cb88f">1. Match the deal stage</h3>
+<p style="font-size:24px; color:#c9d3d8; line-height:1.4">Don't compare a signed price against an offer/asking-price index without adjustment. Use a signed-deal comparator, or an internal same-vintage benchmark, if one is genuinely needed.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:12px; background:#17282f; padding:36px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:28px; font-weight:600; color:#7cb88f">2. Always vintage-match</h3>
+<p style="font-size:24px; color:#c9d3d8; line-height:1.4">This project's own first pass got this wrong (+$194/MWh) before it was caught. Check vintage alignment before any two-price comparison, every time.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:12px; background:#17282f; padding:36px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:28px; font-weight:600; color:#7cb88f">3. State the disclosure rate</h3>
+<p style="font-size:24px; color:#c9d3d8; line-height:1.4">Only 24% of PV projects disclose a PPA price. Say so up front in any summary &mdash; don't let a reader assume full market coverage.</p>
+</div>
+</div>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="limitations">
+<section id="limitations" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:36px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">LIMITATIONS &amp; ASSUMPTIONS</h3>
+<ul style="font-size:30px; color:#c9d3d8; line-height:2; padding-left:40px; max-width:1600px">
+<li>CSP plants excluded (16 of 1,775 projects) &mdash; PPA structure isn't directly comparable to PV</li>
+<li>184 of 425 disclosed-price projects (43%) sit in regions with <b style="color:#e8b74a">no matching third-party benchmark at all</b> (non-ISO West, non-ISO Southeast, Hawaii)</li>
+<li><b style="color:#e8b74a">NYISO's own benchmark value is an Excel formula error</b> in LBNL's source workbook &mdash; genuinely unavailable, not a small-sample issue</li>
+<li>Segment sample sizes remain modest even after the vintage fix (n=5 to n=21) &mdash; real numbers, not large enough for strong causal claims about <i>why</i> any one segment differs</li>
+<li>This is a public-data analog for a deal-pricing problem &mdash; there's no "lost deal" in this dataset, only completed projects</li>
+</ul>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="next-steps">
+<section id="next-steps" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">WHAT I&rsquo;D DO WITH MORE DATA OR TIME</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:64px; font-weight:400; color:#f4f1ea; max-width:1550px">This pre-empts the obvious follow-up questions</h2>
+<ul style="font-size:32px; color:#c9d3d8; line-height:2; padding-left:40px">
+<li>Get a signed-deal comparator (a paid LevelTen tier, if one includes realized prices) to actually test the diagnosis rather than infer it from published methodology alone</li>
+<li>Investigate why disclosure itself is selective &mdash; is the 24% that discloses systematically different from the 76% that doesn't?</li>
+<li>Extend the offtaker-type and region segmentation once more vintage-matched data accumulates past 2024</li>
+<li>Build a small interactive dashboard so a reader can filter by region/vintage themselves, rather than only seeing the segments chosen here</li>
+</ul>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="appendix">
+<section id="appendix" data-transition="fade" style="background:#0b161e; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:32px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">APPENDIX &mdash; DATA &amp; SOURCES</h3>
+<table style="width:100%; border-collapse:collapse; font-size:24px">
+<tr style="border-bottom:1px solid #24404c">
+<th style="text-align:left; padding:12px; color:#9fb2bd; font-weight:600">Source</th>
+<th style="text-align:left; padding:12px; color:#9fb2bd; font-weight:600">What</th>
+<th style="text-align:left; padding:12px; color:#9fb2bd; font-weight:600">Freq.</th>
+</tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:12px">LBNL Utility-Scale Solar, 2025 Edition</td><td style="padding:12px">Project-level PPA price, CapEx, LCOE, capacity factor</td><td style="padding:12px">Annual, 1,775 projects</td></tr>
+<tr><td style="padding:12px">LevelTen &amp; Trio 2024 PPA Index</td><td style="padding:12px">Regional P25 offer-price benchmark, 7 ISO/RTO markets</td><td style="padding:12px">Annual</td></tr>
+</table>
+<div style="display:flex; flex-direction:column; gap:10px">
+<h3 style="font-size:26px; font-weight:600; color:#e8b74a">License</h3>
+<p style="font-size:24px; color:#9fb2bd; line-height:1.5">LBNL data is CC BY 4.0 licensed &mdash; publicly reusable with attribution.</p>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; font-size:22px; color:#6f8492">Full methodology, code, and reproducible notebook: solar-ppa-pricing repo</p>
+</section>
+
+    </div>
+  </div>
+</div>
+
+<div id="bar">
+  <div class="grp">
+    <a href="../index.html">← Portfolio</a>
+    <a href="https://github.com/ChaunceyJones/solar-ppa-pricing" target="_blank" rel="noopener">Code</a>
+  </div>
+  <div class="grp">
+    <button id="prev" aria-label="Previous slide">‹ Prev</button>
+    <span id="counter">1 / 12</span>
+    <button id="next" aria-label="Next slide">Next ›</button>
+  </div>
+</div>
+<p id="hint">Use ← and → arrow keys to navigate</p>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var i = 0;
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+  var counter = document.getElementById('counter');
+  var frame = document.getElementById('frame');
+
+  function scale() {
+    var w = frame.clientWidth;
+    var s = w / 1920;
+    slides.forEach(function (el) { el.style.transform = 'scale(' + s + ')'; });
+  }
+
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (el, idx) { el.classList.toggle('active', idx === i); });
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    prev.disabled = (i === 0);
+    next.disabled = (i === slides.length - 1);
+    if (history.replaceState) history.replaceState(null, '', '#' + (i + 1));
+  }
+
+  prev.addEventListener('click', function () { show(i - 1); });
+  next.addEventListener('click', function () { show(i + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { show(i + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { show(i - 1); }
+    if (e.key === 'Home') { show(0); }
+    if (e.key === 'End')  { show(slides.length - 1); }
+  });
+
+  window.addEventListener('resize', scale);
+  scale();
+
+  var start = parseInt((location.hash || '').replace('#', ''), 10);
+  show(isNaN(start) ? 0 : start - 1);
+</script>
+
+</body>
+</html>
