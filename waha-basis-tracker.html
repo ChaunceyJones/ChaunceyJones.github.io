@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Permian–Waha Basis Dashboard & Trade Recommendation — Chauncey Jones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@300..700&display=swap" rel="stylesheet">
+<style>
+  :root { box-sizing: border-box; --bg:#0b161e; --chrome:#f4f1ea; }
+  *, *::before, *::after { box-sizing: inherit; }
+  html, body { margin:0; padding:0; background:var(--bg); }
+  body {
+    font-family: Helvetica, Arial, sans-serif;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    min-height: 100%;
+  }
+
+  /* Each slide is authored at 1920x1080 and scaled to fit the viewport width. */
+  #stage { width:100%; max-width:1920px; margin:0 auto; position:relative; }
+  #frame { position:relative; width:100%; padding-bottom:56.25%; overflow:hidden; }
+  .slide {
+    position:absolute; inset:0;
+    width:1920px; height:1080px;
+    transform-origin: top left;
+    display:none;
+  }
+  .slide.active { display:block; }
+  .slide > section { width:1920px; height:1080px; margin:0; position:relative; box-sizing:border-box; }
+  .slide aside { display:none; }
+
+  /* Controls */
+  #bar {
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    max-width:1920px; margin:0 auto; padding:14px 20px;
+    color:var(--chrome); font-size:14px;
+  }
+  #bar a, #bar button {
+    font:inherit; color:var(--chrome); background:transparent;
+    border:1px solid rgba(244,241,234,.28); border-radius:8px;
+    padding:8px 14px; cursor:pointer; text-decoration:none;
+  }
+  #bar button:hover, #bar a:hover { border-color:rgba(244,241,234,.7); }
+  #bar button[disabled] { opacity:.35; cursor:default; }
+  #counter { font-variant-numeric:tabular-nums; opacity:.8; }
+  .grp { display:flex; align-items:center; gap:10px; }
+  #hint { text-align:center; color:rgba(244,241,234,.45); font-size:12px; padding:0 20px 20px; }
+  @media (max-width:640px) { #hint { display:none; } #bar { font-size:13px; } }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="frame">
+    <div class="slide" data-id="cover">
+<section id="cover" style="background:#0b161e; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; justify-content:center; gap:32px">
+<p style="font-size:28px; color:#9fb2bd; letter-spacing:2px">TRADING &amp; MARKET ANALYTICS PORTFOLIO PROJECT</p>
+<h1 style="font-family:'Source Serif 4', Georgia, serif; font-size:148px; font-weight:400; line-height:1.05; color:#f4f1ea">Permian&ndash;<span style="color:#e2984a">Waha</span> Basis</h1>
+<p style="font-size:36px; color:#c9d3d8; max-width:1400px">Where the Permian discount widens &mdash; and what a trading desk should do when it does</p>
+<p style="position:absolute; left:128px; bottom:64px; font-size:24px; color:#6f8492">2022&ndash;2026 &middot; Henry Hub (FRED) &middot; EIA Weekly Update &middot; EIA Storage API</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="situation">
+<section id="situation" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px; display:flex; flex-direction:column; justify-content:center; gap:40px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">THE SITUATION</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:80px; font-weight:400; line-height:1.15; color:#f4f1ea; max-width:1500px">A Gas &amp; Power trading desk needs an early-warning view of Permian basis risk</h2>
+<p style="font-size:32px; color:#c9d3d8; max-width:1400px; line-height:1.5">Waha (the Permian hub) regularly trades at a discount to Henry Hub, the national benchmark. When that discount widens or reverses unexpectedly, it matters for hedge timing, pipeline-capacity nominations, and positioning &mdash; but only if the desk can tell a genuine dislocation from Waha's normal, everyday discount.</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="question">
+<section id="question" data-transition="fade" style="background:#0b161e; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:16px">
+<h3 style="font-size:32px; font-weight:600; color:#e2984a; letter-spacing:1px">THE QUESTION</h3>
+<h1 style="font-family:'Source Serif 4', Georgia, serif; font-size:96px; font-weight:400; line-height:1.2; color:#f4f1ea; max-width:1550px">When does Waha decouple from Henry Hub enough to actually matter for a trading decision?</h1>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="data-approach">
+<section id="data-approach" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:68px; font-weight:400; color:#f4f1ea">Data &amp; approach</h2>
+<div style="display:flex; gap:32px">
+<div style="flex:1; display:flex; flex-direction:column; gap:16px; background:#17282f; padding:40px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:30px; font-weight:600; color:#5fb8b0">Henry Hub</h3>
+<p style="font-size:26px; color:#c9d3d8; line-height:1.4">FRED API, daily. EIA's own route for this stopped updating in April 2024 &mdash; confirmed by inspecting it directly, then switched sources.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:16px; background:#17282f; padding:40px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:30px; font-weight:600; color:#e2984a">Waha &amp; rig count</h3>
+<p style="font-size:26px; color:#c9d3d8; line-height:1.4">No clean API exists for Waha anywhere. Regex-parsed from EIA Weekly Update report prose &mdash; the genuine messy-data problem of this project.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:16px; background:#17282f; padding:40px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:30px; font-weight:600; color:#c9d3d8">Storage</h3>
+<p style="font-size:26px; color:#c9d3d8; line-height:1.4">EIA API, South Central region specifically (not the Lower 48 aggregate) &mdash; the figure actually relevant to Permian dynamics.</p>
+</div>
+</div>
+<p style="font-size:28px; color:#9fb2bd; max-width:1500px">Method: basis = Waha &minus; Henry Hub, weekly. Anomalies flagged with a rolling z-score (|z| &gt; 2, trailing 12-observation window).</p>
+<p style="position:absolute; left:128px; bottom:64px; font-size:24px; color:#6f8492">196 report weeks, 2022&ndash;2026 &middot; 111 with a usable Waha price</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="finding1">
+<section id="finding1" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px; display:flex; flex-direction:column; justify-content:center; gap:20px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">FINDING 1 &mdash; THE PERSISTENT DISCOUNT</h3>
+<h1 style="font-family:'Source Serif 4', Georgia, serif; font-size:220px; font-weight:400; color:#e2984a; line-height:1">&minus;$0.91</h1>
+<p style="font-size:34px; color:#c9d3d8">average weekly basis, 2022&ndash;2026 (median &minus;$0.63/MMBtu)</p>
+<p style="font-size:28px; color:#9fb2bd; max-width:1300px; line-height:1.4">Waha traded below Henry Hub in the large majority of 111 usable weeks &mdash; consistent with known Permian Basin takeaway-capacity constraints.</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="finding2">
+<section id="finding2" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:48px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">FINDING 2 &mdash; A LONG NEGATIVE TAIL</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:64px; font-weight:400; color:#f4f1ea; max-width:1550px; line-height:1.2">Most weeks are a modest discount. A few are severe.</h2>
+<div style="display:flex; gap:24px">
+<div style="flex:1; display:flex; flex-direction:column; gap:8px; background:#17282f; padding:32px; border:1px solid #24404c; border-radius:16px; align-items:center">
+<p style="font-size:24px; color:#9fb2bd">MIN</p>
+<h3 style="font-size:56px; font-weight:600; color:#e2984a">&minus;$5.93</h3>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:8px; background:#17282f; padding:32px; border:1px solid #24404c; border-radius:16px; align-items:center">
+<p style="font-size:24px; color:#9fb2bd">25TH PCT</p>
+<h3 style="font-size:56px; font-weight:600; color:#c9d3d8">&minus;$1.17</h3>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:8px; background:#17282f; padding:32px; border:1px solid #24404c; border-radius:16px; align-items:center">
+<p style="font-size:24px; color:#9fb2bd">MEDIAN</p>
+<h3 style="font-size:56px; font-weight:600; color:#c9d3d8">&minus;$0.63</h3>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:8px; background:#17282f; padding:32px; border:1px solid #24404c; border-radius:16px; align-items:center">
+<p style="font-size:24px; color:#9fb2bd">75TH PCT</p>
+<h3 style="font-size:56px; font-weight:600; color:#c9d3d8">&minus;$0.30</h3>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:8px; background:#17282f; padding:32px; border:1px solid #24404c; border-radius:16px; align-items:center">
+<p style="font-size:24px; color:#9fb2bd">MAX</p>
+<h3 style="font-size:56px; font-weight:600; color:#5fb8b0">+$2.01</h3>
+</div>
+</div>
+<p style="font-size:28px; color:#9fb2bd; max-width:1500px">The 75th percentile is still only &minus;$0.30/MMBtu &mdash; but the tail runs all the way to a $5.93 collapse. Dislocations are infrequent, and severe when they happen.</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="finding3">
+<section id="finding3" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">FINDING 3 &mdash; STATISTICALLY UNUSUAL WEEKS</h3>
+<div style="display:flex; gap:48px; align-items:center">
+<h1 style="font-family:'Source Serif 4', Georgia, serif; font-size:140px; font-weight:400; color:#e2984a; line-height:1">9<span style="font-size:56px; color:#9fb2bd">&nbsp;of 111</span></h1>
+<p style="font-size:30px; color:#c9d3d8; max-width:700px">weeks flagged as unusual (|z-score| &gt; 2 vs. a trailing 12-observation mean) &mdash; two distinct patterns, not one</p>
+</div>
+<table style="width:100%; border-collapse:collapse; font-size:28px">
+<tr style="border-bottom:1px solid #24404c">
+<th style="text-align:left; padding:16px 12px; color:#9fb2bd; font-weight:600">Week</th>
+<th style="text-align:left; padding:16px 12px; color:#9fb2bd; font-weight:600">Basis</th>
+<th style="text-align:left; padding:16px 12px; color:#9fb2bd; font-weight:600">Pattern</th>
+</tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:16px 12px">Oct 26, 2022</td><td style="padding:16px 12px; color:#e2984a">&minus;$5.93</td><td style="padding:16px 12px; color:#9fb2bd">Deep dislocation</td></tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:16px 12px">Aug 28, 2024</td><td style="padding:16px 12px; color:#e2984a">&minus;$5.56</td><td style="padding:16px 12px; color:#9fb2bd">Deep dislocation</td></tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:16px 12px">Mar 19, 2025</td><td style="padding:16px 12px; color:#e2984a">&minus;$4.78</td><td style="padding:16px 12px; color:#9fb2bd">Deep dislocation</td></tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:16px 12px">Dec 13, 2023</td><td style="padding:16px 12px; color:#5fb8b0">+$1.06</td><td style="padding:16px 12px; color:#9fb2bd">Positive anomaly</td></tr>
+<tr><td style="padding:16px 12px">Dec 18, 2024</td><td style="padding:16px 12px; color:#5fb8b0">+$2.01</td><td style="padding:16px 12px; color:#9fb2bd">Largest positive anomaly</td></tr>
+</table>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="diagnosis">
+<section id="diagnosis" data-transition="fade" style="background:#8a4f22; color:#f9f4ec; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h3 style="font-size:32px; font-weight:600; color:#f4d9b8; letter-spacing:1px">THE DIAGNOSIS &mdash; WHY</h3>
+<div style="display:flex; gap:48px">
+<div style="flex:1; display:flex; flex-direction:column; gap:16px">
+<h3 style="font-size:40px; font-weight:600; color:#f9f4ec">The deep dislocations</h3>
+<p style="font-size:28px; color:#f4d9b8; line-height:1.45">Oct 2022, Aug 2024, and Mar 2025 align with a widely reported 2022&ndash;2024 period of chronic Permian oversupply and pipeline maintenance. Directly confirmed in EIA's own commentary for August 2024; the other two are consistent with this broader trend, not individually source-verified.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:16px">
+<h3 style="font-size:40px; font-weight:600; color:#f9f4ec">The Dec 2024 reversal</h3>
+<p style="font-size:28px; color:#f4d9b8; line-height:1.45">Coincides with the 2.5 Bcf/d Matterhorn Express Pipeline adding Permian takeaway capacity starting October 2024 &mdash; weeks before the anomaly. Weather data for that week was near-normal, ruling out a demand-spike explanation.</p>
+</div>
+</div>
+<p style="font-size:24px; color:#e8c69a; font-style:italic">This is a plausible, evidence-adjacent hypothesis for the December reversal &mdash; not a confirmed cause. The exact EIA report for that week could not be located to state a cause directly.</p>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="leading-indicators">
+<section id="leading-indicators" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">CAN STORAGE OR RIG COUNT PREDICT THIS?</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:60px; font-weight:400; color:#f4f1ea; max-width:1550px; line-height:1.2">Tested rigorously &mdash; one clear no, one real but unconfirmed</h2>
+<div style="display:flex; gap:32px">
+<div style="flex:1; display:flex; flex-direction:column; gap:16px; background:#17282f; padding:40px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:32px; font-weight:600; color:#c9d3d8">South Central storage</h3>
+<h1 style="font-family:'Source Serif 4', Georgia, serif; font-size:80px; font-weight:400; color:#5fb8b0">No relationship</h1>
+<p style="font-size:26px; color:#9fb2bd; line-height:1.4">Every lag tested (0/1/2/4/8 weeks) is statistically non-significant, p &gt; 0.28 throughout. A real negative finding, not an inconclusive one.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:16px; background:#17282f; padding:40px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:32px; font-weight:600; color:#c9d3d8">Rig count</h3>
+<h1 style="font-family:'Source Serif 4', Georgia, serif; font-size:80px; font-weight:400; color:#e2984a">r &asymp; &minus;0.24 to &minus;0.29</h1>
+<p style="font-size:26px; color:#9fb2bd; line-height:1.4">Consistent at 0&ndash;4 week lags (n = 67&ndash;71), nominally p &lt; 0.05 &mdash; but fails correction for the 10 hypotheses tested (needs p &lt; 0.005). At 8 weeks the relationship weakens and loses significance. A hypothesis worth more data, not a confirmed signal.</p>
+</div>
+</div>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="recommendation">
+<section id="recommendation" data-transition="fade" style="background:#0b161e; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:44px">
+<h3 style="font-size:32px; font-weight:600; color:#e2984a; letter-spacing:1px">RECOMMENDATION</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:72px; font-weight:400; color:#f4f1ea; max-width:1550px">Flag the anomaly. Don&rsquo;t trade the level.</h2>
+<div style="display:flex; gap:32px">
+<div style="flex:1; display:flex; flex-direction:column; gap:12px; background:#17282f; padding:36px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:28px; font-weight:600; color:#5fb8b0">1. Set the trigger</h3>
+<p style="font-size:24px; color:#c9d3d8; line-height:1.4">Basis beyond &plusmn;2 std. dev. of the trailing 12-week mean (&asymp;&plusmn;$2.15 from a &minus;$0.91 baseline) triggers a manual review of pipeline/maintenance news &mdash; not an automatic trade.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:12px; background:#17282f; padding:36px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:28px; font-weight:600; color:#5fb8b0">2. Watch capacity, not just weather</h3>
+<p style="font-size:24px; color:#c9d3d8; line-height:1.4">Track pipeline capacity additions (like Matterhorn) as a structural leading indicator for basis narrowing.</p>
+</div>
+<div style="flex:1; display:flex; flex-direction:column; gap:12px; background:#17282f; padding:36px; border:1px solid #24404c; border-radius:16px">
+<h3 style="font-size:28px; font-weight:600; color:#5fb8b0">3. Don&rsquo;t act on rig count yet</h3>
+<p style="font-size:24px; color:#c9d3d8; line-height:1.4">The relationship is directionally real but not confirmed at this sample size &mdash; a hypothesis for the next iteration, not today&rsquo;s signal.</p>
+</div>
+</div>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="next-steps">
+<section id="next-steps" data-transition="fade" style="background:#10202b; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:40px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">WHAT I&rsquo;D DO WITH MORE DATA OR TIME</h3>
+<h2 style="font-family:'Source Serif 4', Georgia, serif; font-size:64px; font-weight:400; color:#f4f1ea; max-width:1550px">This pre-empts the obvious follow-up questions</h2>
+<ul style="font-size:32px; color:#c9d3d8; line-height:2; padding-left:40px">
+<li>Extend past Jan 21, 2026 &mdash; EIA discontinued this exact report; migrate the parser to its replacement (WNGSR Supplement) on EIA&rsquo;s Beta site</li>
+<li>Improve rig-count coverage beyond the current 64% by finding a source with denser structured data</li>
+<li>Add regional weather (HDD/CDD) as a third leading-indicator candidate alongside storage and rig count</li>
+<li>Wrap extraction in Airflow + dbt for a fully automated, scheduled pipeline</li>
+</ul>
+
+</section>
+
+    </div>
+    <div class="slide" data-id="appendix">
+<section id="appendix" data-transition="fade" style="background:#0b161e; color:#f4f1ea; font-family:Helvetica, Arial, sans-serif; padding:128px 128px 160px; display:flex; flex-direction:column; gap:32px">
+<h3 style="font-size:32px; font-weight:600; color:#9fb2bd; letter-spacing:1px">APPENDIX &mdash; DATA &amp; LIMITATIONS</h3>
+<table style="width:100%; border-collapse:collapse; font-size:24px">
+<tr style="border-bottom:1px solid #24404c">
+<th style="text-align:left; padding:12px; color:#9fb2bd; font-weight:600">Source</th>
+<th style="text-align:left; padding:12px; color:#9fb2bd; font-weight:600">What</th>
+<th style="text-align:left; padding:12px; color:#9fb2bd; font-weight:600">Freq.</th>
+</tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:12px">FRED API</td><td style="padding:12px">Henry Hub spot price</td><td style="padding:12px">Daily</td></tr>
+<tr style="border-bottom:1px solid #24404c"><td style="padding:12px">EIA Weekly Update (parsed)</td><td style="padding:12px">Waha price &amp; rig count</td><td style="padding:12px">Weekly</td></tr>
+<tr><td style="padding:12px">EIA API v2, South Central</td><td style="padding:12px">Regional storage</td><td style="padding:12px">Weekly</td></tr>
+</table>
+<div style="display:flex; flex-direction:column; gap:10px">
+<h3 style="font-size:26px; font-weight:600; color:#e2984a">Known limitations</h3>
+<p style="font-size:24px; color:#9fb2bd; line-height:1.5">Waha coverage ends Jan 21, 2026 (EIA discontinued the report). Only 111 of 196 weeks have a usable Waha price &mdash; EIA only writes the parseable sentence in weeks of notable price moves. Storage/basis dates don&rsquo;t share a calendar day (Friday vs. Wednesday), joined via merge-as-of. Henry Hub (FRED) and Waha (parsed prose) use different underlying methodologies &mdash; directionally reliable, not penny-precise.</p>
+</div>
+<p style="position:absolute; left:128px; bottom:64px; font-size:22px; color:#6f8492">Full methodology, code, and reproducible notebook: permian-waha-basis repo</p>
+</section>
+
+    </div>
+  </div>
+</div>
+
+<div id="bar">
+  <div class="grp">
+    <a href="../index.html">← Portfolio</a>
+    <a href="https://github.com/ChaunceyJones/waha-basis-tracker" target="_blank" rel="noopener">Code</a>
+  </div>
+  <div class="grp">
+    <button id="prev" aria-label="Previous slide">‹ Prev</button>
+    <span id="counter">1 / 12</span>
+    <button id="next" aria-label="Next slide">Next ›</button>
+  </div>
+</div>
+<p id="hint">Use ← and → arrow keys to navigate</p>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var i = 0;
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+  var counter = document.getElementById('counter');
+  var frame = document.getElementById('frame');
+
+  function scale() {
+    var w = frame.clientWidth;
+    var s = w / 1920;
+    slides.forEach(function (el) { el.style.transform = 'scale(' + s + ')'; });
+  }
+
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (el, idx) { el.classList.toggle('active', idx === i); });
+    counter.textContent = (i + 1) + ' / ' + slides.length;
+    prev.disabled = (i === 0);
+    next.disabled = (i === slides.length - 1);
+    if (history.replaceState) history.replaceState(null, '', '#' + (i + 1));
+  }
+
+  prev.addEventListener('click', function () { show(i - 1); });
+  next.addEventListener('click', function () { show(i + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { show(i + 1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   { show(i - 1); }
+    if (e.key === 'Home') { show(0); }
+    if (e.key === 'End')  { show(slides.length - 1); }
+  });
+
+  window.addEventListener('resize', scale);
+  scale();
+
+  var start = parseInt((location.hash || '').replace('#', ''), 10);
+  show(isNaN(start) ? 0 : start - 1);
+</script>
+
+</body>
+</html>
